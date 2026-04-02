@@ -18,3 +18,11 @@ A production-ready fullstack voting system for time-limited events. Users can pa
 - React Router
 - Tanstack Query
 - Axios
+
+## Quick Start
+
+### Using Docker Compose
+
+```bash
+docker-compose up
+```
