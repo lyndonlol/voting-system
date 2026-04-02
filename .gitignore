@@ -1,0 +1,25 @@
+# Dependencies
+node_modules/
+package-lock.json
+
+# Environment
+.env
+
+# Build outputs
+dist/
+build/
+out/
+
+# IDE
+.vscode/
+
+# Linting/Testing
+.eslintcache
+coverage/
+
+# Database
+*.db
+
+# Docker
+.docker/
+

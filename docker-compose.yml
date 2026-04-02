@@ -1,0 +1,54 @@
+version: "3.9"
+
+services:
+  db:
+    image: mysql:8.0
+    container_name: voting-db
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+      MYSQL_DATABASE: voting_system
+    ports:
+      - "3306:3306"
+    volumes:
+      - db-data:/var/lib/mysql
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  backend:
+    build: ./backend
+    container_name: voting-backend
+    restart: unless-stopped
+    ports:
+      - "3001:3001"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=mysql://root:password@db:3306/voting_system
+      - PORT=3001
+    volumes:
+      - ./backend/src:/app/src
+      - ./backend/prisma:/app/prisma
+    command: sh -c "npm run prisma:push && npm run prisma:generate && npm run dev"
+
+  # frontend:
+  #   build: ./frontend
+  #   container_name: voting-frontend
+  #   restart: unless-stopped
+  #   ports:
+  #     - "3000:3000"
+  #   depends_on:
+  #     - backend
+  #   environment:
+  #     - VITE_API_URL=http://backend:3001/api
+  #   volumes:
+  #     - ./frontend:/app
+  #     - /app/node_modules
+  #   command: npm run dev
+
+volumes:
+  db-data:
