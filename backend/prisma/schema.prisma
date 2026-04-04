@@ -6,3 +6,60 @@ generator client {
 datasource db {
   provider = "mysql"
 }
+
+model User {
+  id           Int      @id @default(autoincrement())
+  username     String   @unique
+  phone        String   @unique
+  passwordHash String
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+
+  votes  Vote[]
+  events Event[] @relation("CreatedEvents")
+}
+
+model Event {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?
+  startTime   DateTime
+  endTime     DateTime
+  createdBy   Int
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  createdByUser User   @relation("CreatedEvents", fields: [createdBy], references: [id])
+  choices       Choice[]
+  votes         Vote[]
+}
+
+model Choice {
+  id       Int    @id @default(autoincrement())
+  eventId  Int
+  label     String
+  createdAt DateTime @default(now())
+
+  event Event @relation(fields: [eventId], references: [id])
+  votes Vote[]
+}
+
+model Vote {
+  id       Int      @id @default(autoincrement())
+  userId   Int
+  eventId  Int
+  choiceId Int
+  votedAt  DateTime @default(now())
+
+  user   User   @relation(fields: [userId], references: [id])
+  event  Event  @relation(fields: [eventId], references: [id])
+  choice Choice @relation(fields: [choiceId], references: [id])
+
+  @@unique([userId, eventId])
+}
+
+enum Role {
+  USER
+  ADMIN
+}
