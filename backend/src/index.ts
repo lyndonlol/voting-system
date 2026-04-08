@@ -3,6 +3,7 @@ import 'dotenv/config';
 import cors from 'cors';
 import { errorHandler } from './middlewares/error.middleware.ts';
 import rootRouter from './routes/index.ts';
+import { seedAdmin } from './utils/seed.util.ts';
 
 const app = express();
 const PORT = process.env.PORT ?? 3001;
@@ -24,7 +25,8 @@ app.get('/health_check', (_req, res) => {
 
 app.use(errorHandler);
 
-app.listen(PORT, () => {
+app.listen(PORT, async () => {
+  await seedAdmin();
   console.log(`Server is running on port ${PORT}`);
 });
 
