@@ -1,4 +1,5 @@
 import { prisma } from '../db/prisma.ts';
+import { UserRole } from '../types/roles.ts';
 
 export default class UserRepo {
   async findByUsername(username: string) {
@@ -25,7 +26,7 @@ export default class UserRepo {
     username: string;
     phone: string;
     passwordHash: string;
-    role: 'USER' | 'ADMIN';
+    role: UserRole;
   }) {
     const user = await prisma.user.create({
       data,
