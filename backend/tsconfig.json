@@ -5,17 +5,19 @@
     "moduleResolution": "NodeNext",
     "lib": ["ES2023"],
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": "./",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
     "resolveJsonModule": true,
-    "noUnusedParameters": true
+    "noUnusedParameters": true,
+    "rewriteRelativeImportExtensions": true,
+    "types": ["node"]
   },
   "paths": {
     "@src/*": ["src/*", "dist/*"]
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "prisma.config.ts"],
   "exclude": ["node_modules", "dist", "prisma/seed.ts"]
 }

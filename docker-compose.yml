@@ -33,7 +33,7 @@ services:
     volumes:
       - ./backend/src:/app/src
       - ./backend/prisma:/app/prisma
-    command: sh -c "npm run prisma:push && npm run prisma:generate && npm run dev"
+    command: sh -c "npm run prisma:migrate && npm run prisma:generate && npm run dev"
 
   # frontend:
   #   build: ./frontend
