@@ -1,6 +1,7 @@
-import express from "express";
-import dotenv from "dotenv";
-import cors from "cors";
+import express from 'express';
+import dotenv from 'dotenv';
+import cors from 'cors';
+import authRoutes from './routes/auth.routes.ts';
 
 dotenv.config();
 
@@ -11,9 +12,11 @@ app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.get("/", (req, res) => {
-  console.log("Received request at /", req.method);
-  res.send({ message: "Hello World111222" });
+app.get('/health_check', (_req, res) => {
+    res.status(200).json({
+    status: 'OK',
+message: 'Voting system backend is running',
+});
 });
 
 app.listen(PORT, () => {
