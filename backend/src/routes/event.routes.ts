@@ -4,8 +4,8 @@ import * as eventController from '../controllers/event.controller.ts';
 
 const router = Router();
 
-router.post('/event', authenticate, adminOnly, eventController.createEvent);
-router.get('/event', authenticate, eventController.getEvents);
-router.get('/event/:id', authenticate, eventController.getEventById);
+router.post('/events', authenticate, adminOnly, eventController.createEvent);
+router.get('/events', authenticate, eventController.getEvents);
+router.get('/events/:id', authenticate, eventController.getEventById);
 
 export default router;
