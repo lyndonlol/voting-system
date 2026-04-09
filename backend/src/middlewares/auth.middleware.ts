@@ -13,7 +13,10 @@ interface JwtPayload {
 declare global {
   namespace Express {
     interface Request {
-      userId: number;
+      user: {
+        id: number;
+        role: Role;
+      };
     }
   }
 }
@@ -40,10 +43,22 @@ export const authenticate: RequestHandler = async (
       throw new ApiError('UNAUTHORIZED', 'User not found', 401);
     }
 
-    req.userId = user.id;
+    req.user = user;
 
     next();
   } catch (err) {
     throw new ApiError('UNAUTHORIZED', 'Invalid or expired token', 401);
   }
+};
+
+export const adminOnly: RequestHandler = (
+  req: Request,
+  _res: Response,
+  next: NextFunction
+) => {
+  if (req.user.role !== 'ADMIN') {
+    throw new ApiError('FORBIDDEN', 'Admin access only', 403);
+  }
+
+  next();
 };

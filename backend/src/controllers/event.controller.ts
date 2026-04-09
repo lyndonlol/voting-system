@@ -6,7 +6,7 @@ import EventService from '../services/event.service.ts';
 const eventService = new EventService();
 
 export const createEvent = async (req: Request, res: Response) => {
-  const adminId = req.userId;
+  const adminId = req.user.id;
   const { title, description, startTime, endTime, choices } = req.body;
 
   if (!title || !startTime || !endTime) {
