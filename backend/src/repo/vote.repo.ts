@@ -30,4 +30,16 @@ export default class VoteRepo {
       orderBy: { votedAt: 'desc' },
     });
   }
+
+  async findByUserIdAndEventId(userId: number, eventId: number) {
+    return prisma.vote.findUnique({
+      where: {
+        userId_eventId: {
+          userId,
+          eventId,
+        },
+      },
+      include: { choice: true },
+    });
+  }
 }

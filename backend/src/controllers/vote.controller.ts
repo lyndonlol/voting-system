@@ -27,3 +27,16 @@ export const getMyVotes = async (req: Request, res: Response) => {
 
   res.status(200).json(votes);
 };
+
+export const getMyVote = async (req: Request, res: Response) => {
+  const userId = req.user.id;
+  const eventId = Number(req.params.eventId);
+
+  if (isNaN(eventId)) {
+    throw new ApiError('VALIDATION_ERROR', 'Invalid event ID', 400);
+  }
+
+  const vote = await voteService.getMyVote(userId, eventId);
+
+  res.status(200).json(vote);
+};

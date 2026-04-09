@@ -73,4 +73,20 @@ export default class VoteService {
       votedAt: vote.votedAt,
     }));
   }
+
+  async getMyVote(userId: number, eventId: number) {
+    const vote = await this.voteRepo.findByUserIdAndEventId(userId, eventId);
+
+    if (!vote) {
+      return null;
+    }
+
+    return {
+      id: vote.id,
+      eventId: vote.eventId,
+      choiceId: vote.choiceId,
+      choiceLabel: vote.choice.label,
+      votedAt: vote.votedAt,
+    };
+  }
 }
