@@ -2,7 +2,7 @@ import UserRepo from '../repo/user.repo.ts';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 import { ApiError } from '../utils/error.utils.ts';
-import { UserRole } from '../types/roles.ts';
+import { Role } from '../generated/prisma/enums.ts';
 
 const JWT_SECRET = process.env.JWT_SECRET!;
 
@@ -39,7 +39,7 @@ export default class AuthService {
       username,
       phone,
       passwordHash,
-      role: UserRole.User,
+      role: Role.USER,
     });
 
     const token = jwt.sign(

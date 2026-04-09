@@ -1,6 +1,6 @@
 import { prisma } from '../db/prisma.ts';
 import bcrypt from 'bcryptjs';
-import { UserRole } from '../types/roles.ts';
+import { Role } from '../generated/prisma/enums.ts';
 
 // Seed admin user
 export const seedAdmin = async () => {
@@ -17,7 +17,7 @@ export const seedAdmin = async () => {
           username: 'admin',
           phone: '+85299999999',
           passwordHash,
-          role: UserRole.Admin,
+          role: Role.ADMIN,
         },
       });
       console.log('Admin user seeded: username=admin / password=admin123');
