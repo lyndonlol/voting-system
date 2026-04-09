@@ -22,6 +22,16 @@ export default class UserRepo {
     return user;
   }
 
+  async findById(id: number) {
+    const user = await prisma.user.findUnique({
+      where: {
+        id,
+      },
+    });
+
+    return user;
+  }
+
   async create(data: {
     username: string;
     phone: string;
