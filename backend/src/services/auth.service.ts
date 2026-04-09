@@ -4,8 +4,6 @@ import jwt from 'jsonwebtoken';
 import { ApiError } from '../utils/error.utils.ts';
 import { Role } from '../generated/prisma/enums.ts';
 
-const JWT_SECRET = process.env.JWT_SECRET!;
-
 export default class AuthService {
   constructor(private userRepo: UserRepo = new UserRepo()) {}
 
@@ -42,15 +40,44 @@ export default class AuthService {
       role: Role.USER,
     });
 
-    const token = jwt.sign(
-      { userId: user.id, username: user.username, role: user.role },
-      JWT_SECRET,
-      { expiresIn: '1h' }
-    );
+    const token = this.generateToken({
+      id: user.id,
+      username: user.username,
+      role: user.role,
+    });
 
     return {
       user: { id: user.id, username: user.username, role: user.role },
       token,
     };
+  }
+
+  async login(username: string, password: string) {
+    const user = await this.userRepo.findByUsername(username);
+
+    if (!user || !(await bcrypt.compare(password, user.passwordHash))) {
+      throw new ApiError('AUTH_ERROR', 'Invalid username or password', 401);
+    }
+
+    const token = this.generateToken({
+      id: user.id,
+      username: user.username,
+      role: user.role,
+    });
+
+    return {
+      user: { id: user.id, username: user.username, role: user.role },
+      token,
+    };
+  }
+
+  private generateToken(user: { id: number; username: string; role: Role }) {
+    const JWT_SECRET = process.env.JWT_SECRET!;
+
+    return jwt.sign(
+      { userId: user.id, username: user.username, role: user.role },
+      JWT_SECRET,
+      { expiresIn: '1h' }
+    );
   }
 }

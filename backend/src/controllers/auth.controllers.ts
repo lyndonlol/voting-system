@@ -22,3 +22,18 @@ export const register = async (req: Request, res: Response) => {
 
   res.status(201).json(result);
 };
+
+export const login = async (req: Request, res: Response) => {
+  const { username, password } = req.body;
+
+  if (!username || !password) {
+    throw new ApiError(
+      'VALIDATION_ERROR',
+      'Username and password are required',
+      400
+    );
+  }
+  const result = await authService.login(username, password);
+
+  res.status(200).json(result);
+};
