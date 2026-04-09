@@ -41,4 +41,8 @@ export default class EventService {
 
     return event;
   }
+
+  async getEvents() {
+    return this.eventRepo.findAll();
+  }
 }

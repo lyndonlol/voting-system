@@ -24,4 +24,11 @@ export default class EventRepo {
       include: { choices: true },
     });
   }
+
+  async findAll() {
+    return prisma.event.findMany({
+      include: { choices: true },
+      orderBy: { createdAt: 'desc' },
+    });
+  }
 }

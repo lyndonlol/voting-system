@@ -42,5 +42,11 @@ export const createEvent = async (req: Request, res: Response) => {
     choices,
   });
 
-  res.status(201).json({ success: true, data: event });
+  res.status(201).json(event);
+};
+
+export const getEvents = async (_req: Request, res: Response) => {
+  const events = await eventService.getEvents();
+
+  res.status(200).json(events);
 };
