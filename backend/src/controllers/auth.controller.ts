@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
-import { ApiError } from '../utils/error.utils.js';
+import { ApiError } from '../utils/error.utils.ts';
 import { prisma } from '../db/prisma.ts';
 import AuthService from '../services/auth.service.ts';
 
