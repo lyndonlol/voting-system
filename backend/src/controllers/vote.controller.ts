@@ -20,3 +20,10 @@ export const castVote = async (req: Request, res: Response) => {
 
   res.status(201).json(vote);
 };
+
+export const getMyVotes = async (req: Request, res: Response) => {
+  const userId = req.user.id;
+  const votes = await voteService.getMyVotes(userId);
+
+  res.status(200).json(votes);
+};

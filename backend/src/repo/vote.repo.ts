@@ -19,4 +19,15 @@ export default class VoteRepo {
       include: { choice: true },
     });
   }
+
+  async findByUserId(userId: number) {
+    return prisma.vote.findMany({
+      where: { userId },
+      include: {
+        choice: true,
+        event: true,
+      },
+      orderBy: { votedAt: 'desc' },
+    });
+  }
 }

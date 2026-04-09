@@ -5,5 +5,6 @@ import * as voteController from '../controllers/vote.controller.ts';
 const router = Router();
 
 router.post('/votes', authenticate, voteController.castVote);
+router.get('/votes/me', authenticate, voteController.getMyVotes);
 
 export default router;

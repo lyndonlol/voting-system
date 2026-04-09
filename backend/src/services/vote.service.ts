@@ -61,4 +61,16 @@ export default class VoteService {
       votedAt: vote.votedAt,
     };
   }
+
+  async getMyVotes(userId: number) {
+    const votes = await this.voteRepo.findByUserId(userId);
+
+    return votes.map((vote) => ({
+      id: vote.id,
+      eventId: vote.eventId,
+      choiceId: vote.choiceId,
+      choiceLabel: vote.choice.label,
+      votedAt: vote.votedAt,
+    }));
+  }
 }
