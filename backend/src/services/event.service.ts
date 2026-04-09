@@ -45,4 +45,14 @@ export default class EventService {
   async getEvents() {
     return this.eventRepo.findAll();
   }
+
+  async getEventById(eventId: number) {
+    const event = await this.eventRepo.findById(eventId);
+
+    if (!event) {
+      throw new ApiError('NOT_FOUND', 'Event not found', 404);
+    }
+
+    return event;
+  }
 }

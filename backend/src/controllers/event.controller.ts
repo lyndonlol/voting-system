@@ -50,3 +50,15 @@ export const getEvents = async (_req: Request, res: Response) => {
 
   res.status(200).json(events);
 };
+
+export const getEventById = async (req: Request, res: Response) => {
+  const eventId = Number(req.params.id);
+
+  if (isNaN(eventId)) {
+    throw new ApiError('VALIDATION_ERROR', 'Invalid event ID', 400);
+  }
+
+  const event = await eventService.getEventById(eventId);
+
+  res.status(200).json(event);
+};

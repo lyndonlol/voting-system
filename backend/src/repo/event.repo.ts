@@ -31,4 +31,11 @@ export default class EventRepo {
       orderBy: { createdAt: 'desc' },
     });
   }
+
+  async findById(eventId: number) {
+    return prisma.event.findUnique({
+      where: { id: eventId },
+      include: { choices: true },
+    });
+  }
 }

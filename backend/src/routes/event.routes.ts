@@ -6,5 +6,6 @@ const router = Router();
 
 router.post('/event', authenticate, eventController.createEvent);
 router.get('/event', authenticate, eventController.getEvents);
+router.get('/event/:id', authenticate, eventController.getEventById);
 
 export default router;
