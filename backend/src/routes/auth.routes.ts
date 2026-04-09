@@ -1,22 +1,10 @@
 import { Router } from 'express';
-import { login, register } from '../controllers/auth.controller.ts';
+import * as authController from '../controllers/auth.controller.ts';
 
 const router = Router();
 
-router.post('/auth/register', async (req, res, next) => {
-  try {
-    await register(req, res);
-  } catch (err) {
-    next(err);
-  }
-});
+router.post('/auth/register', authController.register);
 
-router.post('/auth/login', async (req, res, next) => {
-  try {
-    await login(req, res);
-  } catch (err) {
-    next(err);
-  }
-});
+router.post('/auth/login', authController.login);
 
 export default router;
