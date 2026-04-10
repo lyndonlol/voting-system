@@ -43,7 +43,7 @@ const EventTrend = () => {
   });
   const sortedChoices = allChoices.sort();
 
-  const normalizedRows = trends.map((row: HourlyTrend) => ({
+  const trendRows = trends.map((row: HourlyTrend) => ({
     time: row.time,
     choices: sortedChoices.reduce(
       (acc, choice) => {
@@ -74,7 +74,7 @@ const EventTrend = () => {
             </tr>
           </thead>
           <tbody>
-            {normalizedRows.map((row) => (
+            {trendRows.map((row) => (
               <tr key={row.time} className="border-t hover:bg-gray-50">
                 <td className="p-5 font-medium border">
                   {dayjs(row.time).format("YYYY-MM-DD HH:mm")}

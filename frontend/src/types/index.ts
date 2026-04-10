@@ -30,12 +30,12 @@ export interface Vote {
   votedAt: string;
 }
 
-export interface Trend {
+export interface HourlyTrend {
   time: string;
   choices: Record<string, number>;
 }
 
-export type EventTrends = Trend[];
+export type EventTrends = HourlyTrend[];
 
 export interface EventBody {
   title: string;
