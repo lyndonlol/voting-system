@@ -4,12 +4,10 @@ FROM node:22-bookworm AS builder
 WORKDIR /app
 
 COPY package*.json ./
-COPY prisma ./prisma
-COPY src ./src
-COPY tsconfig.json ./
-COPY prisma.config.ts ./
+RUN npm ci
 
-RUN npm install
+COPY . .
+
 RUN npm run build
 
 # Runtime stage
@@ -18,13 +16,12 @@ FROM node:22-bookworm
 WORKDIR /app
 
 COPY package*.json ./
-COPY prisma ./prisma
-COPY prisma.config.ts ./
-
-RUN npm ci
+RUN npm ci --omit=dev 
 
 COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/prisma ./prisma
+COPY --from=builder /app/prisma.config.ts ./prisma.config.ts
 
 EXPOSE 3001
 
-CMD ["npm", "start"]
+CMD ["npm", "run", "start"]
