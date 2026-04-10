@@ -6,7 +6,15 @@ export const ProtectedRoute = ({
 }: {
   allowedRoles: ("USER" | "ADMIN")[];
 }) => {
-  const { user } = useAuth();
+  const { user, isInitialized } = useAuth();
+
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
 
   if (!user) {
     return <Navigate to="/login" replace />;
