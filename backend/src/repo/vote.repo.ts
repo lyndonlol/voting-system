@@ -16,7 +16,7 @@ export default class VoteRepo {
         choiceId,
         votedAt: new Date(),
       },
-      include: { choice: true },
+      include: { choice: true, event: true },
     });
   }
 
@@ -39,7 +39,7 @@ export default class VoteRepo {
           eventId,
         },
       },
-      include: { choice: true },
+      include: { choice: true, event: true },
     });
   }
 

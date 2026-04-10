@@ -56,6 +56,7 @@ export default class VoteService {
     return {
       id: vote.id,
       eventId: vote.eventId,
+      eventTitle: vote.event.title,
       choiceId: vote.choiceId,
       choiceLabel: vote.choice.label,
       votedAt: vote.votedAt,
@@ -68,6 +69,7 @@ export default class VoteService {
     return votes.map((vote) => ({
       id: vote.id,
       eventId: vote.eventId,
+      eventTitle: vote.event.title,
       choiceId: vote.choiceId,
       choiceLabel: vote.choice.label,
       votedAt: vote.votedAt,
@@ -84,6 +86,7 @@ export default class VoteService {
     return {
       id: vote.id,
       eventId: vote.eventId,
+      eventTitle: vote.event.title,
       choiceId: vote.choiceId,
       choiceLabel: vote.choice.label,
       votedAt: vote.votedAt,
