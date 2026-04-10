@@ -37,3 +37,11 @@ export interface EventTrends {
     choices: Record<string, number>;
   }[];
 }
+
+export interface EventBody {
+  title: string;
+  description?: string;
+  startTime: string;
+  endTime: string;
+  choices: string[];
+}

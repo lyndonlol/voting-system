@@ -5,6 +5,7 @@ import { ProtectedRoute } from "../components/common/ProtectedRoute";
 import VotingDashboard from "../pages/user/VotingDashboard";
 import MyVotes from "../pages/user/MyVotes";
 import EventsList from "../pages/admin/EventsList";
+import CreateEvent from "../pages/admin/CreateEvent";
 
 const AppRoutes = () => {
   return (
@@ -21,7 +22,8 @@ const AppRoutes = () => {
 
       {/* Admin routes */}
       <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
-        <Route path="/admin" element={<EventsList />} />
+        <Route path="/admin/events" element={<EventsList />} />
+        <Route path="/admin/events/new" element={<CreateEvent />} />
       </Route>
 
       {/* Fallback */}
