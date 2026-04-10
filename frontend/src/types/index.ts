@@ -30,13 +30,12 @@ export interface Vote {
   votedAt: string;
 }
 
-export interface EventTrends {
-  eventId: number;
-  trends: {
-    time: string;
-    choices: Record<string, number>;
-  }[];
+export interface Trend {
+  time: string;
+  choices: Record<string, number>;
 }
+
+export type EventTrends = Trend[];
 
 export interface EventBody {
   title: string;

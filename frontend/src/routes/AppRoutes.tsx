@@ -6,6 +6,7 @@ import VotingDashboard from "../pages/user/VotingDashboard";
 import MyVotes from "../pages/user/MyVotes";
 import EventsList from "../pages/admin/EventsList";
 import CreateEvent from "../pages/admin/CreateEvent";
+import EventTrend from "../pages/admin/EventTrend";
 
 const AppRoutes = () => {
   return (
@@ -24,10 +25,11 @@ const AppRoutes = () => {
       <Route element={<ProtectedRoute allowedRoles={["ADMIN"]} />}>
         <Route path="/admin/events" element={<EventsList />} />
         <Route path="/admin/events/new" element={<CreateEvent />} />
+        <Route path="/admin/events/:eventId" element={<EventTrend />} />
       </Route>
 
       {/* Fallback */}
-      <Route path="*" element={<Navigate to="/login" replace />} />
+      <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   );
 };

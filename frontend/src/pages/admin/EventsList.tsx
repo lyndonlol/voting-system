@@ -42,7 +42,7 @@ const EventsList = () => {
               </p>
             </div>
             <Link
-              to={`/admin/trends/${event.id}`}
+              to={`/admin/events/${event.id}`}
               className="bg-gray-100 hover:bg-gray-200 px-5 py-2 rounded-xl text-sm font-medium"
             >
               View Trends
