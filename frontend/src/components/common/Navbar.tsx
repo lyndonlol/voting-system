@@ -20,7 +20,7 @@ export const Navbar = () => {
           {user && (
             <>
               {user.role === "ADMIN" && (
-                <Link to="/admin" className="hover:text-blue-400">
+                <Link to="/admin/events" className="hover:text-blue-400">
                   Admin Dashboard
                 </Link>
               )}

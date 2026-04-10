@@ -21,7 +21,7 @@ const Login = () => {
     mutationFn: (credentials) => api.post("/auth/login", credentials),
     onSuccess: (res) => {
       login(res.data.user, res.data.token);
-      navigate(res.data.user.role === "ADMIN" ? "/admin" : "/");
+      navigate(res.data.user.role === "ADMIN" ? "/admin/events" : "/");
     },
     onError: (err) => {
       setError(err.response?.data.message || "Invalid username or password");
