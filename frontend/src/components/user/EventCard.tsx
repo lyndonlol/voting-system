@@ -10,7 +10,7 @@ const EventCard = ({ event }: { event: Event }) => {
   const isActive = dayjs().isAfter(startTime) && dayjs().isBefore(endTime);
 
   return (
-    <div className="bg-white rounded-2xl shadow p-6 ">
+    <div className="bg-white rounded-2xl shadow p-6">
       <h3 className="font-semibold text-xl mb-1">{event.title}</h3>
       <div className="text-gray-500 text-sm mb-4">
         <p>Start: {dayjs(event.startTime).format("YYYY-MM-DD HH:mm")} </p>

@@ -24,6 +24,7 @@ export interface Event {
 export interface Vote {
   voteId: number;
   eventId: number;
+  eventTitle: string;
   choiceId: number;
   choiceLabel: string;
   votedAt: string;
