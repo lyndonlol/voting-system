@@ -62,3 +62,15 @@ export const getEventById = async (req: Request, res: Response) => {
 
   res.status(200).json(event);
 };
+
+export const getEventTrends = async (req: Request, res: Response) => {
+  const eventId = Number(req.params.id);
+
+  if (isNaN(eventId)) {
+    throw new ApiError('VALIDATION_ERROR', 'Invalid event ID', 400);
+  }
+
+  const trends = await eventService.getEventTrends(eventId);
+
+  res.status(200).json(trends);
+};

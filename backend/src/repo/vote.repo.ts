@@ -42,4 +42,18 @@ export default class VoteRepo {
       include: { choice: true },
     });
   }
+
+  async findByEventIdForTrends(eventId: number) {
+    return prisma.vote.findMany({
+      where: { eventId },
+      include: {
+        choice: {
+          select: {
+            label: true,
+          },
+        },
+      },
+      orderBy: { votedAt: 'desc' },
+    });
+  }
 }

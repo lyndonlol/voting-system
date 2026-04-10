@@ -1,10 +1,14 @@
-import { Dayjs } from 'dayjs';
+import dayjs, { Dayjs } from 'dayjs';
 import ChoiceRepo from '../repo/choice.repo.ts';
 import EventRepo from '../repo/event.repo.ts';
 import { ApiError } from '../utils/error.utils.ts';
+import VoteRepo from '../repo/vote.repo.ts';
 
 export default class EventService {
-  constructor(private eventRepo: EventRepo = new EventRepo()) {}
+  constructor(
+    private eventRepo: EventRepo = new EventRepo(),
+    private voteRepo: VoteRepo = new VoteRepo()
+  ) {}
 
   async createEvent(data: {
     title: string;
@@ -54,5 +58,50 @@ export default class EventService {
     }
 
     return event;
+  }
+
+  async getEventTrends(eventId: number) {
+    const event = await this.getEventById(eventId);
+
+    if (!event) {
+      throw new ApiError('NOT_FOUND', 'Event not found', 404);
+    }
+
+    const votes = await this.voteRepo.findByEventIdForTrends(eventId);
+
+    // Group votes by hour
+    const hourlyCounts: Record<string, Record<string, number>> = {};
+
+    votes.forEach((vote) => {
+      const hour = dayjs(vote.votedAt).startOf('hour').toISOString();
+      const choice = vote.choice.label;
+
+      if (!hourlyCounts[hour]) {
+        hourlyCounts[hour] = {};
+      }
+
+      hourlyCounts[hour][choice] = (hourlyCounts[hour][choice] || 0) + 1;
+    });
+
+    // Sort hours and calculate cumulative counts
+    const sortedHours = Object.keys(hourlyCounts).sort();
+
+    const cumulative: Record<string, number> = {};
+    const trends: { time: string; choices: Record<string, number> }[] = [];
+
+    for (const hour of sortedHours) {
+      // Add current hour's votes to cumulative total
+      Object.keys(hourlyCounts[hour]).forEach((choice) => {
+        cumulative[choice] =
+          (cumulative[choice] || 0) + hourlyCounts[hour][choice];
+      });
+
+      trends.push({
+        time: hour,
+        choices: { ...cumulative },
+      });
+    }
+
+    return trends;
   }
 }
