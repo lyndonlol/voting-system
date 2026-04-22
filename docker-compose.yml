@@ -4,7 +4,6 @@ services:
     container_name: voting-db
     restart: unless-stopped
     environment:
-      MYSQL_USER: root
       MYSQL_ROOT_PASSWORD: password
       MYSQL_DATABASE: voting_system
     ports:
